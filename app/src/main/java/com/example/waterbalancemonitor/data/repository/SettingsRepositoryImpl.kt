@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.datetime.DayOfWeek
 import javax.inject.Inject
 
-class SettingsPreferencesRepositoryImpl @Inject constructor(
+class SettingsRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) : SettingsRepository {
 

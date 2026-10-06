@@ -5,7 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.example.waterbalancemonitor.data.repository.SettingsPreferencesRepositoryImpl
+import com.example.waterbalancemonitor.data.repository.SettingsRepositoryImpl
 import com.example.waterbalancemonitor.domain.repository.SettingsRepository
 import dagger.Binds
 import dagger.Module
@@ -22,7 +22,7 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindSettingsRepository(
-        impl: SettingsPreferencesRepositoryImpl
+        impl: SettingsRepositoryImpl
     ): SettingsRepository
 }
 
