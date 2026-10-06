@@ -3,7 +3,7 @@ package com.example.waterbalancemonitor.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.waterbalancemonitor.domain.model.ThemeMode
-import com.example.waterbalancemonitor.domain.usecase.ObserveThemeModeUseCase
+import com.example.waterbalancemonitor.domain.usecase.settings.ObserveThemeModeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
