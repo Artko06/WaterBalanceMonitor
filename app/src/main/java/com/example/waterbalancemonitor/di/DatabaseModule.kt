@@ -12,6 +12,7 @@ import com.example.waterbalancemonitor.data.local.room.dao.ProfileDao
 import com.example.waterbalancemonitor.data.local.room.dao.ReminderDao
 import com.example.waterbalancemonitor.data.local.room.dao.UserAchievementDao
 import com.example.waterbalancemonitor.data.local.room.dao.VesselDao
+import com.example.waterbalancemonitor.data.local.room.seed.DatabaseSeedCallback
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,7 +32,7 @@ object DatabaseModule {
         context,
         HydrationDatabase::class.java,
         HydrationDatabase.DATABASE_NAME
-    ).build()
+    ).addCallback(DatabaseSeedCallback).build()
 
     @Provides
     fun provideProfileDao(database: HydrationDatabase): ProfileDao = database.profileDao()
