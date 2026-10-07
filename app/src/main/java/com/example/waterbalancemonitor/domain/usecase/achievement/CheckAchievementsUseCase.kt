@@ -40,7 +40,7 @@ class CheckAchievementsUseCase @Inject constructor(
 
         achievements.forEach { achievement ->
             val progress = progressFor(achievement.conditionType, achievement.conditionValue, events, completedDates.size, totalMl, streak)
-            val isUnlocked = achievement.conditionValue > 0 && progress >= achievement.conditionValue
+            val isUnlocked = achievement.conditionValue in 1..progress
             val existing = userAchievementRepository.getByAchievementId(achievement.id)
             val unlocked = isUnlocked || existing?.isUnlocked == true
             userAchievementRepository.save(
