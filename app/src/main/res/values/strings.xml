@@ -65,4 +65,20 @@
     <string name="norm_info_formula">Formula: goal = weight (kg) x (men 29 / women 27 ml/kg) x activity factor. The value is limited to 1500-4000 ml.</string>
     <string name="norm_info_disclaimer">Important: this is an estimate, not medical advice. Individual needs vary widely. For illness, pregnancy, intense sport or a hot climate, follow your doctor\'s advice. You can adjust the goal manually.</string>
     <string name="norm_info_sources">Sources: EFSA Journal 2010;8(3):1459; IOM/NAM Dietary Reference Intakes for Water 2004; ACSM Position Stand Exercise and Fluid Replacement, MSSE 2007; Armstrong and Johnson, Nutrients 2018.</string>
+
+    <string name="onboarding_welcome_title">Welcome!</string>
+    <string name="onboarding_welcome_desc">Let\'s set up your personal daily water goal. It takes less than a minute.</string>
+    <string name="onboarding_weight_title">Your weight</string>
+    <string name="onboarding_weight_desc">Water needs grow with body mass, so your daily goal is proportional to your weight. This affects the calculation.</string>
+    <string name="onboarding_gender_title">Your gender</string>
+    <string name="onboarding_gender_desc">The base water recommendation differs for men and women (EFSA, 2010). This affects the calculation.</string>
+    <string name="onboarding_activity_title">How active are you?</string>
+    <string name="onboarding_activity_desc">Physical activity increases water loss through sweat, so we apply a multiplier from 1.0 to 1.5. This affects the calculation.</string>
+    <string name="onboarding_summary_title">Your daily goal</string>
+    <string name="onboarding_summary_desc">Estimated from your data. You can change it any time in Profile.</string>
+    <string name="onboarding_name_label">Your name (optional)</string>
+    <string name="onboarding_how">How we calculate</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_back">Back</string>
+    <string name="onboarding_start">Start</string>
 </resources>

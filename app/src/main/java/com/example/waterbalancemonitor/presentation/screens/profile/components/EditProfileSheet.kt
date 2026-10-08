@@ -2,30 +2,22 @@ package com.example.waterbalancemonitor.presentation.screens.profile.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.waterbalancemonitor.R
-import com.example.waterbalancemonitor.domain.model.ActivityLevel
-import com.example.waterbalancemonitor.domain.model.Gender
+import com.example.waterbalancemonitor.presentation.components.ActivitySelector
+import com.example.waterbalancemonitor.presentation.components.GenderSelector
+import com.example.waterbalancemonitor.presentation.components.NumberEditor
 import com.example.waterbalancemonitor.presentation.screens.profile.action.ProfileAction
 import com.example.waterbalancemonitor.presentation.screens.profile.state.ProfileField
 import com.example.waterbalancemonitor.presentation.screens.profile.state.ProfileState
@@ -86,9 +78,15 @@ fun EditProfileSheet(
                 onApply = { onAction(ProfileAction.ApplyClicked) }
             )
 
-            ProfileField.GENDER -> GenderEditor(state = state, onAction = onAction)
+            ProfileField.GENDER -> GenderSelector(
+                selected = state.gender,
+                onSelected = { onAction(ProfileAction.GenderSelected(it)) }
+            )
 
-            ProfileField.ACTIVITY -> ActivityEditor(state = state, onAction = onAction)
+            ProfileField.ACTIVITY -> ActivitySelector(
+                selected = state.activityLevel,
+                onSelected = { onAction(ProfileAction.ActivitySelected(it)) }
+            )
         }
     }
 }
@@ -104,12 +102,6 @@ private fun NameEditor(
         label = { Text(stringResource(R.string.profile_name)) },
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-        isError = state.showValidation,
-        supportingText = if (state.showValidation) {
-            { Text(stringResource(R.string.error_name_required)) }
-        } else {
-            null
-        },
         modifier = Modifier.fillMaxWidth()
     )
     Button(
@@ -117,59 +109,6 @@ private fun NameEditor(
         modifier = Modifier.fillMaxWidth()
     ) {
         Text(stringResource(R.string.sheet_save))
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun GenderEditor(
-    state: ProfileState,
-    onAction: (ProfileAction) -> Unit
-) {
-    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        Gender.entries.forEach { gender ->
-            FilterChip(
-                selected = state.gender == gender,
-                onClick = { onAction(ProfileAction.GenderSelected(gender)) },
-                label = { Text(stringResource(gender.labelRes())) }
-            )
-        }
-    }
-}
-
-@Composable
-private fun ActivityEditor(
-    state: ProfileState,
-    onAction: (ProfileAction) -> Unit
-) {
-    Column(modifier = Modifier.selectableGroup()) {
-        ActivityLevel.entries.forEach { level ->
-            val selected = state.activityLevel == level
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .selectable(
-                        selected = selected,
-                        onClick = { onAction(ProfileAction.ActivitySelected(level)) },
-                        role = Role.RadioButton
-                    )
-                    .padding(vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RadioButton(selected = selected, onClick = null)
-                Column(modifier = Modifier.padding(start = 8.dp)) {
-                    Text(
-                        text = stringResource(level.labelRes()),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                    Text(
-                        text = stringResource(level.descriptionRes()),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
-        }
     }
 }
 

@@ -1,4 +1,4 @@
-package com.example.waterbalancemonitor.presentation.screens.profile.components
+package com.example.waterbalancemonitor.presentation.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -45,7 +45,7 @@ fun NumberEditor(
     step: Float,
     unit: String,
     onValueChange: (Float) -> Unit,
-    onApply: () -> Unit,
+    onApply: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     var isEditing by remember { mutableStateOf(false) }
@@ -140,11 +140,13 @@ fun NumberEditor(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        Button(
-            onClick = onApply,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(stringResource(R.string.sheet_save))
+        if (onApply != null) {
+            Button(
+                onClick = onApply,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(stringResource(R.string.sheet_save))
+            }
         }
     }
 

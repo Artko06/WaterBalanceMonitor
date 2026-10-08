@@ -30,7 +30,7 @@ import com.example.waterbalancemonitor.presentation.screens.profile.components.P
 import com.example.waterbalancemonitor.presentation.screens.profile.components.SettingRow
 import com.example.waterbalancemonitor.presentation.screens.profile.components.SettingsSection
 import com.example.waterbalancemonitor.presentation.screens.profile.components.SwitchRow
-import com.example.waterbalancemonitor.presentation.screens.profile.components.labelRes
+import com.example.waterbalancemonitor.presentation.mapper.labelRes
 import com.example.waterbalancemonitor.presentation.screens.profile.effect.ProfileEffect
 import com.example.waterbalancemonitor.presentation.screens.profile.state.ProfileField
 import com.example.waterbalancemonitor.presentation.screens.profile.state.ProfileState

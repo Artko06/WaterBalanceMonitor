@@ -61,7 +61,7 @@ class ProfileViewModel @Inject constructor(
                     it.copy(
                         name = profile.name,
                         weightKg = profile.weightKg,
-                        heightCm = profile.heightCm.roundToInt(),
+                        heightCm = profile.heightCm?.roundToInt(),
                         age = profile.age,
                         gender = profile.gender,
                         activityLevel = profile.activityLevel,
@@ -146,14 +146,7 @@ class ProfileViewModel @Inject constructor(
         val field = current.editingField ?: return
 
         when (field) {
-            ProfileField.NAME -> {
-                val name = current.draftText.trim()
-                if (name.isBlank()) {
-                    _state.update { it.copy(showValidation = true) }
-                    return
-                }
-                commit(current.copy(name = name))
-            }
+            ProfileField.NAME -> commit(current.copy(name = current.draftText.trim()))
 
             ProfileField.WEIGHT -> {
                 val value = current.draftNumber ?: return
@@ -203,8 +196,6 @@ class ProfileViewModel @Inject constructor(
     private fun persistIfValid() {
         val current = _state.value
         val weight = current.weightKg ?: return
-        val height = current.heightCm ?: return
-        val age = current.age ?: return
         if (!current.isValid) return
         viewModelScope.launch {
             val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
@@ -213,8 +204,8 @@ class ProfileViewModel @Inject constructor(
                     id = profileId,
                     name = current.name.trim(),
                     weightKg = weight,
-                    heightCm = height.toDouble(),
-                    age = age,
+                    heightCm = current.heightCm?.toDouble(),
+                    age = current.age,
                     gender = current.gender,
                     activityLevel = current.activityLevel,
                     dailyNormMl = current.effectiveNormMl,

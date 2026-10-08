@@ -20,8 +20,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             val viewModel: MainViewModel = hiltViewModel()
             val themeMode by viewModel.themeMode.collectAsStateWithLifecycle()
+            val startRoute by viewModel.startRoute.collectAsStateWithLifecycle()
             WaterBalanceMonitorTheme(themeMode = themeMode) {
-                WaterBalanceApp()
+                WaterBalanceApp(startDestination = startRoute)
             }
         }
     }

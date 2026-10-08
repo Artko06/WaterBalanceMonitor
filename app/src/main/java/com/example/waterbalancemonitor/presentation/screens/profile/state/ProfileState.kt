@@ -19,23 +19,20 @@ data class ProfileState(
     val isLoaded: Boolean = false,
     val showValidation: Boolean = false
 ) {
-    val isNameValid: Boolean
-        get() = name.isNotBlank()
-
     val isWeightValid: Boolean
         get() = weightKg?.let { it in MIN_WEIGHT..MAX_WEIGHT } == true
 
     val isHeightValid: Boolean
-        get() = heightCm?.let { it in MIN_HEIGHT..MAX_HEIGHT } == true
+        get() = heightCm?.let { it in MIN_HEIGHT..MAX_HEIGHT } ?: true
 
     val isAgeValid: Boolean
-        get() = age?.let { it in MIN_AGE..MAX_AGE } == true
+        get() = age?.let { it in MIN_AGE..MAX_AGE } ?: true
 
     val isGoalValid: Boolean
         get() = !isGoalManual || goalOverrideMl?.let { it in MIN_GOAL..MAX_GOAL } == true
 
     val isValid: Boolean
-        get() = isNameValid && isWeightValid && isHeightValid && isAgeValid && isGoalValid
+        get() = isWeightValid && isHeightValid && isAgeValid && isGoalValid
 
     val effectiveNormMl: Int
         get() = if (isGoalManual) {
