@@ -35,5 +35,17 @@ object DatabaseSeedCallback : RoomDatabase.Callback() {
                 )
             )
         }
+        DefaultSeedData.vessels.forEach { vessel ->
+            db.execSQL(
+                "INSERT OR IGNORE INTO vessel " +
+                    "(name, volumeMl, icon, isDefault) VALUES (?, ?, ?, ?)",
+                arrayOf<Any?>(
+                    vessel.name,
+                    vessel.volumeMl,
+                    vessel.icon,
+                    if (vessel.isDefault) 1 else 0
+                )
+            )
+        }
     }
 }

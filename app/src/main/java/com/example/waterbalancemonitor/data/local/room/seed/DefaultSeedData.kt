@@ -2,10 +2,12 @@ package com.example.waterbalancemonitor.data.local.room.seed
 
 import com.example.waterbalancemonitor.data.local.room.entity.AchievementEntity
 import com.example.waterbalancemonitor.data.local.room.entity.DrinkTypeEntity
+import com.example.waterbalancemonitor.data.local.room.entity.VesselEntity
 import com.example.waterbalancemonitor.domain.model.AchievementCategory
 import com.example.waterbalancemonitor.domain.model.AchievementConditionType
 import com.example.waterbalancemonitor.domain.model.AchievementIcon
 import com.example.waterbalancemonitor.domain.model.DrinkTypeIcon
+import com.example.waterbalancemonitor.domain.model.VesselIcon
 
 object DefaultSeedData {
 
@@ -26,12 +28,6 @@ object DefaultSeedData {
             name = "Tea",
             hydrationCoefficient = 0.9,
             icon = DrinkTypeIcon.TEA.name,
-            isDefault = false
-        ),
-        DrinkTypeEntity(
-            name = "Soup",
-            hydrationCoefficient = 0.9,
-            icon = DrinkTypeIcon.SOUP.name,
             isDefault = false
         ),
         DrinkTypeEntity(
@@ -133,5 +129,13 @@ object DefaultSeedData {
             conditionValue = 22,
             icon = AchievementIcon.NIGHT.name
         )
+    )
+
+    val vessels: List<VesselEntity> = listOf(
+        VesselEntity(name = "Glass", volumeMl = 250, icon = VesselIcon.GLASS.name, isDefault = true),
+        VesselEntity(name = "Cup", volumeMl = 200, icon = VesselIcon.CUP.name, isDefault = false),
+        VesselEntity(name = "Mug", volumeMl = 350, icon = VesselIcon.MUG.name, isDefault = false),
+        VesselEntity(name = "Bottle", volumeMl = 500, icon = VesselIcon.BOTTLE.name, isDefault = false),
+        VesselEntity(name = "Sport bottle", volumeMl = 750, icon = VesselIcon.SPORT_BOTTLE.name, isDefault = false)
     )
 }

@@ -5,7 +5,7 @@ import kotlinx.datetime.LocalDateTime
 data class IntakeEvent(
     val id: Long,
     val drinkTypeId: Long,
-    val vesselId: Long,
+    val vesselId: Long?,
     val volumeMl: Int,
     val consumedAt: LocalDateTime
 )

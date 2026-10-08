@@ -14,8 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
@@ -43,7 +41,7 @@ fun WaterBalanceApp(startDestination: String?) {
                     BottomDestination.entries.forEach { destination ->
                         NavigationBarItem(
                             selected = currentRoute == destination.screen.route,
-                            onClick = { navController.navigateToBottomDestination(destination) },
+                            onClick = { navController.navigateToBottomDestination(destination.screen) },
                             icon = {
                                 Icon(
                                     imageVector = destination.icon,
@@ -66,15 +64,5 @@ fun WaterBalanceApp(startDestination: String?) {
                 .fillMaxSize()
                 .padding(innerPadding)
         )
-    }
-}
-
-private fun NavHostController.navigateToBottomDestination(destination: BottomDestination) {
-    navigate(destination.screen.route) {
-        popUpTo(graph.findStartDestination().id) {
-            saveState = true
-        }
-        launchSingleTop = true
-        restoreState = true
     }
 }

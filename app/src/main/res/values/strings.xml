@@ -81,4 +81,23 @@
     <string name="onboarding_next">Next</string>
     <string name="onboarding_back">Back</string>
     <string name="onboarding_start">Start</string>
+
+    <string name="dashboard_greeting">Hi, %1$s</string>
+    <string name="dashboard_greeting_no_name">Hello</string>
+    <string name="dashboard_left">%1$d %2$s left</string>
+    <string name="dashboard_today">Today</string>
+    <string name="dashboard_of_target">of %1$d %2$s</string>
+    <string name="dashboard_remaining">Remaining</string>
+    <string name="dashboard_add_water">Add water</string>
+    <string name="dashboard_drink_type">Drink</string>
+    <string name="dashboard_change">Change</string>
+    <string name="dashboard_vessel">Vessel</string>
+    <string name="dashboard_vessel_none">No vessel</string>
+    <string name="dashboard_volume">Volume</string>
+    <string name="dashboard_effective">Will add: %1$d %2$s</string>
+    <string name="dashboard_add">Add</string>
+    <string name="dashboard_no_intakes">No intakes yet</string>
+    <string name="dashboard_change_goal">Change goal</string>
+    <string name="dashboard_delete">Delete</string>
+    <string name="dashboard_set_goal_hint">Set your daily goal to start tracking</string>
 </resources>

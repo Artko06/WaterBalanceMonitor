@@ -26,7 +26,7 @@ import androidx.room.PrimaryKey
 data class IntakeEventEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val drinkTypeId: Long,
-    val vesselId: Long,
+    val vesselId: Long?,
     val volumeMl: Int,
     val consumedAt: Long
 )

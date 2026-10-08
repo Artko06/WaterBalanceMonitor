@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.waterbalancemonitor.R
 import com.example.waterbalancemonitor.presentation.screens.PlaceholderScreen
+import com.example.waterbalancemonitor.presentation.screens.dashboard.DashboardScreen
 import com.example.waterbalancemonitor.presentation.screens.norminfo.NormInfoScreen
 import com.example.waterbalancemonitor.presentation.screens.onboarding.OnboardingScreen
 import com.example.waterbalancemonitor.presentation.screens.profile.ProfileScreen
@@ -32,7 +33,11 @@ fun WaterBalanceNavHost(
                 onNavigateToNormInfo = { navController.navigate(Screen.NormInfo.route) }
             )
         }
-        composable(Screen.Dashboard.route) { PlaceholderScreen(R.string.nav_dashboard) }
+        composable(Screen.Dashboard.route) {
+            DashboardScreen(
+                onNavigateToGoal = { navController.navigateToBottomDestination(Screen.Profile) }
+            )
+        }
         composable(Screen.History.route) { PlaceholderScreen(R.string.nav_history) }
         composable(Screen.Statistics.route) { PlaceholderScreen(R.string.nav_statistics) }
         composable(Screen.Goals.route) { PlaceholderScreen(R.string.nav_goals) }
