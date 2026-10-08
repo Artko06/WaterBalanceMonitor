@@ -9,4 +9,60 @@
     <string name="nav_profile">Profile</string>
     <string name="nav_settings">Settings</string>
     <string name="action_refresh">Refresh</string>
+    <string name="action_back">Back</string>
+    <string name="action_decrease">Decrease</string>
+    <string name="action_increase">Increase</string>
+    <string name="unit_ml">ml</string>
+    <string name="unit_kg">kg</string>
+    <string name="unit_cm">cm</string>
+    <string name="unit_years">years</string>
+
+    <string name="profile_title">Profile</string>
+    <string name="profile_goal_label">Your daily goal</string>
+    <string name="profile_goal_subtitle">Estimated from your data</string>
+    <string name="profile_how_calculated">How we calculate</string>
+    <string name="profile_section_about">About you</string>
+    <string name="profile_name">Name</string>
+    <string name="profile_weight">Weight (kg)</string>
+    <string name="profile_height">Height (cm)</string>
+    <string name="profile_age">Age</string>
+    <string name="profile_gender">Gender</string>
+    <string name="gender_male">Male</string>
+    <string name="gender_female">Female</string>
+    <string name="profile_activity">Activity level</string>
+    <string name="activity_sedentary">Sedentary</string>
+    <string name="activity_light">Light (1-2 / week)</string>
+    <string name="activity_moderate">Moderate (3-4 / week)</string>
+    <string name="activity_active">Active (5+ / week)</string>
+    <string name="activity_very_active">Very active (daily)</string>
+    <string name="activity_sedentary_desc">Little or no exercise, mostly sitting (x1.0)</string>
+    <string name="activity_light_desc">Light exercise or sport 1-2 days a week (x1.1)</string>
+    <string name="activity_moderate_desc">Moderate exercise 3-4 days a week (x1.2)</string>
+    <string name="activity_active_desc">Hard exercise 5+ days a week (x1.35)</string>
+    <string name="activity_very_active_desc">Hard daily exercise or physical work (x1.5)</string>
+    <string name="profile_manual_goal">Set goal manually</string>
+    <string name="profile_goal_override">Daily goal (ml)</string>
+    <string name="profile_save">Save</string>
+    <string name="profile_saved">Profile saved</string>
+    <string name="profile_section_goal">Daily goal</string>
+    <string name="profile_set_manually">Set manually</string>
+    <string name="value_not_set">Not set</string>
+    <string name="sheet_save">Save</string>
+
+    <string name="error_name_required">Enter your name</string>
+    <string name="error_weight_invalid">Enter weight 20-400 kg</string>
+    <string name="error_height_invalid">Enter height 50-250 cm</string>
+    <string name="error_age_invalid">Enter age 1-120</string>
+    <string name="error_goal_invalid">Enter a goal 500-6000 ml</string>
+
+    <string name="norm_info_title">How we calculate your norm</string>
+    <string name="norm_info_intro">Water needs are individual, so your daily goal is an estimate based on research.</string>
+    <string name="norm_info_base">Base: the European Food Safety Authority (EFSA, 2010) sets adequate water intake for adults at 2.0 L per day for women and 2.5 L per day for men. This is total water, including water from food (about 20%). Because the app tracks only drinks, the base for drinks is taken as 1.6 / 2.0 L.</string>
+    <string name="norm_info_personalization">Personalisation:</string>
+    <string name="norm_info_weight">• Weight: water needs grow with body mass, so the goal is proportional to your weight.</string>
+    <string name="norm_info_gender">• Gender: the base differs between men and women.</string>
+    <string name="norm_info_activity">• Activity: physical activity raises water loss through sweat, so a multiplier (1.0-1.5) is applied.</string>
+    <string name="norm_info_formula">Formula: goal = weight (kg) x (men 29 / women 27 ml/kg) x activity factor. The value is limited to 1500-4000 ml.</string>
+    <string name="norm_info_disclaimer">Important: this is an estimate, not medical advice. Individual needs vary widely. For illness, pregnancy, intense sport or a hot climate, follow your doctor\'s advice. You can adjust the goal manually.</string>
+    <string name="norm_info_sources">Sources: EFSA Journal 2010;8(3):1459; IOM/NAM Dietary Reference Intakes for Water 2004; ACSM Position Stand Exercise and Fluid Replacement, MSSE 2007; Armstrong and Johnson, Nutrients 2018.</string>
 </resources>

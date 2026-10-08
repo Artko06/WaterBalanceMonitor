@@ -1,8 +1,5 @@
 package com.example.waterbalancemonitor.presentation.navigation
 
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -10,9 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.waterbalancemonitor.R
 import com.example.waterbalancemonitor.presentation.screens.PlaceholderScreen
-
-const val ANIMATION_SPEC = 300
-
+import com.example.waterbalancemonitor.presentation.screens.norminfo.NormInfoScreen
+import com.example.waterbalancemonitor.presentation.screens.profile.ProfileScreen
 
 @Composable
 fun WaterBalanceNavHost(
@@ -22,13 +18,7 @@ fun WaterBalanceNavHost(
     NavHost(
         navController = navController,
         startDestination = Screen.Dashboard.route,
-        modifier = modifier,
-        enterTransition = {
-            fadeIn(animationSpec = tween(ANIMATION_SPEC))
-        },
-        exitTransition = {
-            fadeOut(animationSpec = tween(ANIMATION_SPEC))
-        }
+        modifier = modifier
     ) {
         composable(Screen.Dashboard.route) { PlaceholderScreen(R.string.nav_dashboard) }
         composable(Screen.History.route) { PlaceholderScreen(R.string.nav_history) }
@@ -36,7 +26,14 @@ fun WaterBalanceNavHost(
         composable(Screen.Goals.route) { PlaceholderScreen(R.string.nav_goals) }
         composable(Screen.Achievements.route) { PlaceholderScreen(R.string.nav_achievements) }
         composable(Screen.Reminders.route) { PlaceholderScreen(R.string.nav_reminders) }
-        composable(Screen.Profile.route) { PlaceholderScreen(R.string.nav_profile) }
+        composable(Screen.Profile.route) {
+            ProfileScreen(
+                onNavigateToNormInfo = { navController.navigate(Screen.NormInfo.route) }
+            )
+        }
         composable(Screen.Settings.route) { PlaceholderScreen(R.string.nav_settings) }
+        composable(Screen.NormInfo.route) {
+            NormInfoScreen()
+        }
     }
 }
