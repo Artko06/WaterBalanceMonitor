@@ -1,6 +1,7 @@
-package com.example.waterbalancemonitor.presentation.screens.dashboard.components
+package com.example.waterbalancemonitor.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,14 +11,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -30,21 +38,58 @@ import com.example.waterbalancemonitor.domain.model.IntakeEvent
 import com.example.waterbalancemonitor.domain.model.Vessel
 import com.example.waterbalancemonitor.domain.usecase.intake.effectiveVolumeMl
 import com.example.waterbalancemonitor.presentation.mapper.toDrawableRes
+import kotlinx.coroutines.launch
 
 @Composable
-fun TodayIntakeItem(
+fun IntakeListItem(
     event: IntakeEvent,
     drinkType: DrinkType?,
     vessel: Vessel?,
     onDelete: (IntakeEvent) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onEdit: ((IntakeEvent) -> Unit)? = null
 ) {
     val dismissState = rememberSwipeToDismissBoxState()
+    val scope = rememberCoroutineScope()
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
     LaunchedEffect(dismissState.currentValue) {
         if (dismissState.currentValue == SwipeToDismissBoxValue.EndToStart) {
-            onDelete(event)
+            showDeleteDialog = true
         }
     }
+
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                showDeleteDialog = false
+                scope.launch { dismissState.reset() }
+            },
+            title = { Text(stringResource(R.string.intake_delete_title)) },
+            text = { Text(stringResource(R.string.intake_delete_message)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showDeleteDialog = false
+                        onDelete(event)
+                    }
+                ) {
+                    Text(stringResource(R.string.action_delete))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        showDeleteDialog = false
+                        scope.launch { dismissState.reset() }
+                    }
+                ) {
+                    Text(stringResource(R.string.action_cancel))
+                }
+            }
+        )
+    }
+
     SwipeToDismissBox(
         state = dismissState,
         enableDismissFromStartToEnd = false,
@@ -58,15 +103,20 @@ fun TodayIntakeItem(
             ) {
                 Icon(
                     imageVector = Icons.Filled.Delete,
-                    contentDescription = stringResource(R.string.dashboard_delete),
+                    contentDescription = stringResource(R.string.action_delete),
                     tint = MaterialTheme.colorScheme.onErrorContainer
                 )
             }
         },
         modifier = modifier
     ) {
+        val rowModifier = if (onEdit != null) {
+            Modifier.clickable { onEdit(event) }
+        } else {
+            Modifier
+        }
         Row(
-            modifier = Modifier
+            modifier = rowModifier
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.surface)
                 .padding(16.dp),
@@ -99,7 +149,12 @@ fun TodayIntakeItem(
                 )
             }
             Text(
-                text = "${effectiveVolumeMl(event.volumeMl, drinkType?.hydrationCoefficient ?: 1.0)} ${stringResource(R.string.unit_ml)}",
+                text = "${
+                    effectiveVolumeMl(
+                        event.volumeMl,
+                        drinkType?.hydrationCoefficient ?: 1.0
+                    )
+                } ${stringResource(R.string.unit_ml)}",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )

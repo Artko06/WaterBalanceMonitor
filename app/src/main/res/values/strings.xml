@@ -98,8 +98,32 @@
     <string name="dashboard_add">Add</string>
     <string name="dashboard_no_intakes">No intakes yet</string>
     <string name="dashboard_change_goal">Change goal</string>
-    <string name="dashboard_delete">Delete</string>
+    <string name="action_delete">Delete</string>
     <string name="dashboard_set_goal_hint">Set your daily goal to start tracking</string>
+
+    <string name="picker_drink_type">Drink</string>
+    <string name="picker_vessel">Vessel</string>
+    <string name="picker_vessel_none">No vessel</string>
+
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="intake_delete_title">Delete intake?</string>
+    <string name="intake_delete_message">This entry will be permanently removed.</string>
+
+    <string name="history_previous_day">Previous day</string>
+    <string name="history_next_day">Next day</string>
+    <string name="history_go_to_today">Go to today</string>
+    <string name="history_day_drank">Drank</string>
+    <string name="history_day_goal">Goal</string>
+    <string name="history_no_intakes">No intakes this day</string>
+    <string name="history_edit_title">Edit intake</string>
+    <string name="history_volume">Volume</string>
+    <string name="history_time">Time</string>
+    <string name="history_effective">Will add: %1$d %2$s</string>
+    <string name="history_save">Save</string>
+    <string name="history_save_error">Could not save changes</string>
+    <string name="history_completed">Goal reached</string>
+    <string name="history_not_completed">Goal not reached</string>
 
     <string name="goals_title">Goals</string>
     <string name="goals_daily_goal">Daily goal</string>

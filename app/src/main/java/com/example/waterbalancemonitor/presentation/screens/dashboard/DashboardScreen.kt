@@ -25,14 +25,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.waterbalancemonitor.R
+import com.example.waterbalancemonitor.presentation.components.DrinkPickerSheet
+import com.example.waterbalancemonitor.presentation.components.IntakeListItem
+import com.example.waterbalancemonitor.presentation.components.VesselPickerSheet
 import com.example.waterbalancemonitor.presentation.components.rememberEnterAnimation
 import com.example.waterbalancemonitor.presentation.screens.dashboard.action.DashboardAction
 import com.example.waterbalancemonitor.presentation.screens.dashboard.components.AddWaterSection
 import com.example.waterbalancemonitor.presentation.screens.dashboard.components.DashboardHeader
-import com.example.waterbalancemonitor.presentation.screens.dashboard.components.DrinkPickerSheet
 import com.example.waterbalancemonitor.presentation.screens.dashboard.components.ProgressRing
-import com.example.waterbalancemonitor.presentation.screens.dashboard.components.TodayIntakeItem
-import com.example.waterbalancemonitor.presentation.screens.dashboard.components.VesselPickerSheet
 import com.example.waterbalancemonitor.presentation.screens.dashboard.effect.DashboardEffect
 import com.example.waterbalancemonitor.presentation.screens.dashboard.state.DashboardState
 import com.example.waterbalancemonitor.presentation.screens.dashboard.viewmodel.DashboardViewModel
@@ -138,7 +138,7 @@ private fun DashboardContent(
             items(state.todayIntakes, key = { it.id }) { event ->
                 val drinkType = state.drinkTypes.firstOrNull { it.id == event.drinkTypeId }
                 val vessel = state.vessels.firstOrNull { it.id == event.vesselId }
-                TodayIntakeItem(
+                IntakeListItem(
                     event = event,
                     drinkType = drinkType,
                     vessel = vessel,

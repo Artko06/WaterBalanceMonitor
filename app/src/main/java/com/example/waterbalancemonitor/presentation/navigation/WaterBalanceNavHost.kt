@@ -9,6 +9,7 @@ import com.example.waterbalancemonitor.R
 import com.example.waterbalancemonitor.presentation.screens.PlaceholderScreen
 import com.example.waterbalancemonitor.presentation.screens.dashboard.DashboardScreen
 import com.example.waterbalancemonitor.presentation.screens.goals.GoalsScreen
+import com.example.waterbalancemonitor.presentation.screens.history.HistoryScreen
 import com.example.waterbalancemonitor.presentation.screens.norminfo.NormInfoScreen
 import com.example.waterbalancemonitor.presentation.screens.onboarding.OnboardingScreen
 import com.example.waterbalancemonitor.presentation.screens.profile.ProfileScreen
@@ -39,7 +40,9 @@ fun WaterBalanceNavHost(
                 onNavigateToGoal = { navController.navigate(Screen.Goals.route) }
             )
         }
-        composable(Screen.History.route) { PlaceholderScreen(R.string.nav_history) }
+        composable(Screen.History.route) {
+            HistoryScreen()
+        }
         composable(Screen.Statistics.route) { PlaceholderScreen(R.string.nav_statistics) }
         composable(Screen.Goals.route) {
             GoalsScreen()

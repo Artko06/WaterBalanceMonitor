@@ -1,4 +1,4 @@
-package com.example.waterbalancemonitor.presentation.screens.dashboard.components
+package com.example.waterbalancemonitor.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -26,15 +24,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.waterbalancemonitor.R
-import com.example.waterbalancemonitor.domain.model.Vessel
+import com.example.waterbalancemonitor.domain.model.DrinkType
 import com.example.waterbalancemonitor.presentation.mapper.toDrawableRes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun VesselPickerSheet(
-    vessels: List<Vessel>,
+fun DrinkPickerSheet(
+    drinkTypes: List<DrinkType>,
     selectedId: Long?,
-    onSelect: (Long?) -> Unit,
+    onSelect: (Long) -> Unit,
     onDismiss: () -> Unit
 ) {
     ModalBottomSheet(onDismissRequest = onDismiss) {
@@ -46,20 +44,19 @@ fun VesselPickerSheet(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                text = stringResource(R.string.dashboard_vessel),
+                text = stringResource(R.string.picker_drink_type),
                 style = MaterialTheme.typography.titleLarge
             )
-            val cells: List<Vessel?> = listOf<Vessel?>(null) + vessels
-            cells.chunked(3).forEach { rowItems ->
+            drinkTypes.orderedForPicker().chunked(3).forEach { rowItems ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    rowItems.forEach { vessel ->
-                        VesselCell(
-                            vessel = vessel,
-                            selected = vessel?.id == selectedId,
-                            onClick = { onSelect(vessel?.id) },
+                    rowItems.forEach { drinkType ->
+                        DrinkCell(
+                            drinkType = drinkType,
+                            selected = drinkType.id == selectedId,
+                            onClick = { onSelect(drinkType.id) },
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -72,9 +69,21 @@ fun VesselPickerSheet(
     }
 }
 
+private val PREFERRED_DRINK_ORDER = listOf("Water", "Tea", "Coffee")
+
+private fun List<DrinkType>.orderedForPicker(): List<DrinkType> = sortedWith(
+    compareBy(
+        { drinkType ->
+            val index = PREFERRED_DRINK_ORDER.indexOf(drinkType.name)
+            if (index == -1) PREFERRED_DRINK_ORDER.size else index
+        },
+        { it.name }
+    )
+)
+
 @Composable
-private fun VesselCell(
-    vessel: Vessel?,
+private fun DrinkCell(
+    drinkType: DrinkType,
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -98,25 +107,14 @@ private fun VesselCell(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        if (vessel != null) {
-            Icon(
-                painter = painterResource(vessel.icon.toDrawableRes()),
-                contentDescription = null,
-                tint = contentColor,
-                modifier = Modifier.size(32.dp)
-            )
-        } else {
-            Icon(
-                imageVector = Icons.Filled.Close,
-                contentDescription = null,
-                tint = contentColor,
-                modifier = Modifier.size(32.dp)
-            )
-        }
+        Icon(
+            painter = painterResource(drinkType.icon.toDrawableRes()),
+            contentDescription = null,
+            tint = contentColor,
+            modifier = Modifier.size(32.dp)
+        )
         Text(
-            text = vessel?.let {
-                "${it.name} · ${it.volumeMl} ${stringResource(R.string.unit_ml)}"
-            } ?: stringResource(R.string.dashboard_vessel_none),
+            text = drinkType.name,
             style = MaterialTheme.typography.labelMedium,
             color = contentColor,
             textAlign = TextAlign.Center
