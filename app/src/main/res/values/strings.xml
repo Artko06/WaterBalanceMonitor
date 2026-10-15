@@ -125,6 +125,24 @@
     <string name="history_completed">Goal reached</string>
     <string name="history_not_completed">Goal not reached</string>
 
+    <string name="stats_title">Statistics</string>
+    <string name="stats_period_day">Day</string>
+    <string name="stats_period_week">Week</string>
+    <string name="stats_period_month">Month</string>
+    <string name="stats_period_year">Year</string>
+    <string name="stats_total">Total</string>
+    <string name="stats_average">Daily average</string>
+    <string name="stats_completed_percent">Days completed</string>
+    <string name="stats_best_day">Best day</string>
+    <string name="stats_worst_day">Worst day</string>
+    <string name="stats_streak_current">Current streak</string>
+    <string name="stats_streak_longest">Longest</string>
+    <string name="stats_streak_days">%1$d days</string>
+    <string name="stats_trend_up">\u2191 %1$d%% vs previous</string>
+    <string name="stats_trend_down">\u2193 %1$d%% vs previous</string>
+    <string name="stats_percent">%1$d%%</string>
+    <string name="stats_no_data">No data for this period</string>
+
     <string name="goals_title">Goals</string>
     <string name="goals_daily_goal">Daily goal</string>
     <string name="goals_base_norm">Base norm</string>

@@ -13,6 +13,7 @@ import com.example.waterbalancemonitor.presentation.screens.history.HistoryScree
 import com.example.waterbalancemonitor.presentation.screens.norminfo.NormInfoScreen
 import com.example.waterbalancemonitor.presentation.screens.onboarding.OnboardingScreen
 import com.example.waterbalancemonitor.presentation.screens.profile.ProfileScreen
+import com.example.waterbalancemonitor.presentation.screens.statistics.StatisticsScreen
 
 @Composable
 fun WaterBalanceNavHost(
@@ -43,7 +44,9 @@ fun WaterBalanceNavHost(
         composable(Screen.History.route) {
             HistoryScreen()
         }
-        composable(Screen.Statistics.route) { PlaceholderScreen(R.string.nav_statistics) }
+        composable(Screen.Statistics.route) {
+            StatisticsScreen()
+        }
         composable(Screen.Goals.route) {
             GoalsScreen()
         }
