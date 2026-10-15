@@ -32,12 +32,12 @@ import kotlin.time.Clock
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    observeProfile: ObserveProfileUseCase,
-    observeTodaySummary: GetTodaySummaryUseCase,
-    observeTodayGoal: ObserveTodayGoalUseCase,
-    observeTodayIntakes: ObserveTodayIntakesUseCase,
-    observeDrinkTypes: ObserveDrinkTypesUseCase,
-    observeVessels: ObserveVesselsUseCase,
+    private val observeProfile: ObserveProfileUseCase,
+    private val observeTodaySummary: GetTodaySummaryUseCase,
+    private val observeTodayGoal: ObserveTodayGoalUseCase,
+    private val observeTodayIntakes: ObserveTodayIntakesUseCase,
+    private val observeDrinkTypes: ObserveDrinkTypesUseCase,
+    private val observeVessels: ObserveVesselsUseCase,
     private val logIntake: LogIntakeUseCase,
     private val deleteIntake: DeleteIntakeUseCase,
     private val ensureTodayGoal: EnsureTodayGoalUseCase

@@ -16,8 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    observeThemeModeUseCase: ObserveThemeModeUseCase,
-    observeProfile: ObserveProfileUseCase
+    private val observeThemeModeUseCase: ObserveThemeModeUseCase,
+    private val observeProfile: ObserveProfileUseCase
 ) : ViewModel() {
 
     val themeMode: StateFlow<ThemeMode> = observeThemeModeUseCase()
