@@ -151,6 +151,8 @@ class DashboardViewModel @Inject constructor(
                     consumedAt = now
                 )
             )
+            _state.update { it.copy(isAddPanelVisible = false) }
+            _effect.tryEmit(DashboardEffect.ScrollToTop)
         }
     }
 }

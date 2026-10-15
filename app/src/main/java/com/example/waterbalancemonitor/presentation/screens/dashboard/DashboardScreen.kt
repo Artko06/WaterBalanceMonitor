@@ -10,13 +10,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -37,6 +40,7 @@ import com.example.waterbalancemonitor.presentation.screens.dashboard.effect.Das
 import com.example.waterbalancemonitor.presentation.screens.dashboard.state.DashboardState
 import com.example.waterbalancemonitor.presentation.screens.dashboard.viewmodel.DashboardViewModel
 import com.example.waterbalancemonitor.presentation.theme.WaterBalanceMonitorTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun DashboardScreen(
@@ -45,11 +49,14 @@ fun DashboardScreen(
     viewModel: DashboardViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val listState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {
                 DashboardEffect.NavigateToGoalEditing -> onNavigateToGoal()
+                DashboardEffect.ScrollToTop -> scope.launch { listState.animateScrollToItem(0) }
             }
         }
     }
@@ -57,7 +64,8 @@ fun DashboardScreen(
     DashboardContent(
         state = state,
         onAction = viewModel::onAction,
-        modifier = modifier
+        modifier = modifier,
+        listState = listState
     )
 
     if (state.isDrinkPickerOpen) {
@@ -83,10 +91,12 @@ fun DashboardScreen(
 private fun DashboardContent(
     state: DashboardState,
     onAction: (DashboardAction) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    listState: LazyListState = rememberLazyListState()
 ) {
     val entered = rememberEnterAnimation()
     LazyColumn(
+        state = listState,
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
