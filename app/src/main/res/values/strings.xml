@@ -100,4 +100,22 @@
     <string name="dashboard_change_goal">Change goal</string>
     <string name="dashboard_delete">Delete</string>
     <string name="dashboard_set_goal_hint">Set your daily goal to start tracking</string>
+
+    <string name="goals_title">Goals</string>
+    <string name="goals_daily_goal">Daily goal</string>
+    <string name="goals_base_norm">Base norm</string>
+    <string name="goals_bonus">Extra</string>
+    <string name="goals_consumed">Drank today</string>
+    <string name="goals_remaining">Remaining</string>
+    <string name="goals_completed">Goal reached</string>
+    <string name="goals_in_progress">In progress</string>
+    <string name="goals_edit_bonus">Adjust extra</string>
+    <string name="goals_history">History</string>
+    <string name="goals_history_empty">No history yet</string>
+    <string name="goals_history_progress">%1$d / %2$d %3$s</string>
+    <string name="goals_percent">%1$d%%</string>
+    <string name="goals_status_completed">Completed</string>
+    <string name="goals_status_missed">Missed</string>
+    <string name="goals_bonus_editor_title">Extra volume</string>
+    <string name="goals_bonus_preview">New daily goal: %1$d %2$s</string>
 </resources>
