@@ -18,16 +18,25 @@ class GetStatisticsUseCase @Inject constructor(
     ) { summaries, goals ->
         val totalMl = summaries.sumOf { it.totalMl }
         val daysCount = summaries.size
+        val completedDays = goals.count { it.isCompleted }
         val bestDay = summaries.maxByOrNull { it.totalMl }
+        val worstDay = summaries.minByOrNull { it.totalMl }
         Statistics(
             from = from,
             to = to,
             totalMl = totalMl,
             averageMl = if (daysCount > 0) totalMl / daysCount else 0,
             daysCount = daysCount,
-            completedDays = goals.count { it.isCompleted },
+            completedDays = completedDays,
+            completedPercent = if (goals.isNotEmpty()) {
+                completedDays * 100 / goals.size
+            } else {
+                0
+            },
             bestDayMl = bestDay?.totalMl ?: 0,
-            bestDate = bestDay?.date
+            bestDate = bestDay?.date,
+            worstDayMl = worstDay?.totalMl ?: 0,
+            worstDate = worstDay?.date
         )
     }
 }

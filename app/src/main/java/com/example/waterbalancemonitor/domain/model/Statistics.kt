@@ -9,6 +9,9 @@ data class Statistics(
     val averageMl: Int,
     val daysCount: Int,
     val completedDays: Int,
+    val completedPercent: Int,
     val bestDayMl: Int,
-    val bestDate: LocalDate?
+    val bestDate: LocalDate?,
+    val worstDayMl: Int,
+    val worstDate: LocalDate?
 )
