@@ -21,6 +21,7 @@ val LightOnSurface = Color(0xFF1A1C1E)
 val LightSurfaceVariant = Color(0xFFDEE3EB)
 val LightOnSurfaceVariant = Color(0xFF42474E)
 val LightOutline = Color(0xFF72777F)
+val LightSurfaceContainerHighest = Color(0xFFE9F0FC)
 
 val DarkPrimary = Color(0xFFA5D8FF)
 val DarkOnPrimary = Color(0xFF003258)
