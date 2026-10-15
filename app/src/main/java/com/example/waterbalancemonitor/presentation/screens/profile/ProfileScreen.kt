@@ -24,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.waterbalancemonitor.R
 import com.example.waterbalancemonitor.domain.model.ActivityLevel
 import com.example.waterbalancemonitor.domain.model.Gender
+import com.example.waterbalancemonitor.presentation.components.rememberEnterAnimation
 import com.example.waterbalancemonitor.presentation.screens.profile.action.ProfileAction
 import com.example.waterbalancemonitor.presentation.screens.profile.components.EditProfileSheet
 import com.example.waterbalancemonitor.presentation.screens.profile.components.ProfileHeader
@@ -75,6 +76,7 @@ private fun ProfileContent(
     onAction: (ProfileAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val entered = rememberEnterAnimation()
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -85,7 +87,8 @@ private fun ProfileContent(
         ProfileHeader(
             state = state,
             onAction = onAction,
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
+            entered = entered
         )
         AboutSection(
             state = state,

@@ -1,11 +1,13 @@
 package com.example.waterbalancemonitor.presentation.screens.dashboard.components
 
+import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -17,8 +19,13 @@ fun DashboardHeader(
     name: String,
     remainingMl: Int,
     goalMl: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    entered: Boolean = true
 ) {
+    val animatedRemainingMl by animateIntAsState(
+        targetValue = if (entered) remainingMl else 0,
+        label = "remainingMl"
+    )
     Column(
         modifier = modifier.padding(top = 8.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -36,7 +43,7 @@ fun DashboardHeader(
             Text(
                 text = stringResource(
                     R.string.dashboard_left,
-                    remainingMl,
+                    animatedRemainingMl,
                     stringResource(R.string.unit_ml)
                 ),
                 style = MaterialTheme.typography.headlineMedium,

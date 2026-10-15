@@ -36,10 +36,11 @@ import com.example.waterbalancemonitor.presentation.screens.profile.state.Profil
 fun ProfileHeader(
     state: ProfileState,
     onAction: (ProfileAction) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    entered: Boolean = true
 ) {
     val animatedNormMl by animateIntAsState(
-        targetValue = state.effectiveNormMl,
+        targetValue = if (entered) state.effectiveNormMl else 0,
         label = "dailyNorm"
     )
     ElevatedCard(

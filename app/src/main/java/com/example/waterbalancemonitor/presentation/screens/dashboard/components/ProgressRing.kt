@@ -1,6 +1,7 @@
 package com.example.waterbalancemonitor.presentation.screens.dashboard.components
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
@@ -29,12 +30,21 @@ fun ProgressRing(
     consumedMl: Int,
     goalMl: Int,
     percent: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    entered: Boolean = true
 ) {
     val animatedProgress by animateFloatAsState(
-        targetValue = progress.coerceIn(0f, 1f),
+        targetValue = if (entered) progress.coerceIn(0f, 1f) else 0f,
         animationSpec = tween(durationMillis = 800),
         label = "ringProgress"
+    )
+    val animatedConsumedMl by animateIntAsState(
+        targetValue = if (entered) consumedMl else 0,
+        label = "ringConsumed"
+    )
+    val animatedPercent by animateIntAsState(
+        targetValue = if (entered) percent else 0,
+        label = "ringPercent"
     )
     val trackColor = MaterialTheme.colorScheme.surfaceVariant
     val progressColor = MaterialTheme.colorScheme.primary
@@ -69,7 +79,7 @@ fun ProgressRing(
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             Text(
-                text = "$consumedMl",
+                text = "$animatedConsumedMl",
                 style = MaterialTheme.typography.displaySmall,
                 fontWeight = FontWeight.Bold
             )
@@ -79,7 +89,7 @@ fun ProgressRing(
                 color = labelColor
             )
             Text(
-                text = "$percent%",
+                text = "$animatedPercent%",
                 style = MaterialTheme.typography.titleMedium,
                 color = progressColor
             )

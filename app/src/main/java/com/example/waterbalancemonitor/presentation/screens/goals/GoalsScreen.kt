@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.waterbalancemonitor.R
+import com.example.waterbalancemonitor.presentation.components.rememberEnterAnimation
 import com.example.waterbalancemonitor.presentation.screens.goals.action.GoalsAction
 import com.example.waterbalancemonitor.presentation.screens.goals.components.EditBonusSheet
 import com.example.waterbalancemonitor.presentation.screens.goals.components.GoalHistoryItem
@@ -51,6 +52,7 @@ private fun GoalsContent(
     onAction: (GoalsAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val entered = rememberEnterAnimation()
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
@@ -59,7 +61,8 @@ private fun GoalsContent(
         item {
             GoalProgressCard(
                 state = state,
-                onEditBonus = { onAction(GoalsAction.OpenBonusEditor) }
+                onEditBonus = { onAction(GoalsAction.OpenBonusEditor) },
+                entered = entered
             )
         }
         item {

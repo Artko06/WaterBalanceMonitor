@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.waterbalancemonitor.R
+import com.example.waterbalancemonitor.presentation.components.rememberEnterAnimation
 import com.example.waterbalancemonitor.presentation.screens.dashboard.action.DashboardAction
 import com.example.waterbalancemonitor.presentation.screens.dashboard.components.AddWaterSection
 import com.example.waterbalancemonitor.presentation.screens.dashboard.components.DashboardHeader
@@ -84,6 +85,7 @@ private fun DashboardContent(
     onAction: (DashboardAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val entered = rememberEnterAnimation()
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
@@ -93,7 +95,8 @@ private fun DashboardContent(
             DashboardHeader(
                 name = state.name,
                 remainingMl = state.remainingMl,
-                goalMl = state.goalMl
+                goalMl = state.goalMl,
+                entered = entered
             )
         }
         item {
@@ -106,7 +109,8 @@ private fun DashboardContent(
                     consumedMl = state.consumedMl,
                     goalMl = state.goalMl,
                     percent = state.percent,
-                    modifier = Modifier.size(220.dp)
+                    modifier = Modifier.size(220.dp),
+                    entered = entered
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 TextButton(onClick = { onAction(DashboardAction.ChangeGoalClicked) }) {

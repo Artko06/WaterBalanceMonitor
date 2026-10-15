@@ -1,5 +1,8 @@
 package com.example.waterbalancemonitor.presentation.screens.goals.components
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,6 +24,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,8 +38,26 @@ import com.example.waterbalancemonitor.presentation.screens.goals.state.GoalsSta
 fun GoalProgressCard(
     state: GoalsState,
     onEditBonus: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    entered: Boolean = true
 ) {
+    val animatedTarget by animateIntAsState(
+        targetValue = if (entered) state.targetMl else 0,
+        label = "goalTarget"
+    )
+    val animatedConsumed by animateIntAsState(
+        targetValue = if (entered) state.consumedMl else 0,
+        label = "goalConsumed"
+    )
+    val animatedRemaining by animateIntAsState(
+        targetValue = if (entered) state.remainingMl else 0,
+        label = "goalRemaining"
+    )
+    val animatedProgress by animateFloatAsState(
+        targetValue = if (entered) state.progress else 0f,
+        animationSpec = tween(durationMillis = 800),
+        label = "goalProgress"
+    )
     Card(modifier = modifier.fillMaxWidth()) {
         Column(
             modifier = Modifier.padding(20.dp),
@@ -47,7 +69,7 @@ fun GoalProgressCard(
             )
             Row(verticalAlignment = Alignment.Bottom) {
                 Text(
-                    text = state.targetMl.toString(),
+                    text = animatedTarget.toString(),
                     style = MaterialTheme.typography.displaySmall,
                     fontWeight = FontWeight.Bold
                 )
@@ -59,7 +81,7 @@ fun GoalProgressCard(
                 )
             }
             LinearProgressIndicator(
-                progress = { state.progress },
+                progress = { animatedProgress },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(8.dp)
@@ -71,11 +93,11 @@ fun GoalProgressCard(
             ) {
                 LabeledValue(
                     label = stringResource(R.string.goals_consumed),
-                    value = state.consumedMl
+                    value = animatedConsumed
                 )
                 LabeledValue(
                     label = stringResource(R.string.goals_remaining),
-                    value = state.remainingMl,
+                    value = animatedRemaining,
                     alignEnd = true
                 )
             }
@@ -94,7 +116,7 @@ fun GoalProgressCard(
                 )
                 LabeledValue(
                     label = stringResource(R.string.goals_daily_goal),
-                    value = state.targetMl,
+                    value = animatedTarget,
                     alignEnd = true
                 )
             }
