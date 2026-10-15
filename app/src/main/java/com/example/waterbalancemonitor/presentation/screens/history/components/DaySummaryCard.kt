@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.waterbalancemonitor.R
+import com.example.waterbalancemonitor.presentation.components.StatusBadge
 import com.example.waterbalancemonitor.presentation.screens.history.state.HistoryState
 
 @Composable
@@ -89,20 +90,10 @@ fun DaySummaryCard(
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.primary
                     )
-                    Text(
-                        text = stringResource(
-                            if (state.isCompleted) {
-                                R.string.history_completed
-                            } else {
-                                R.string.history_not_completed
-                            }
-                        ),
-                        style = MaterialTheme.typography.labelLarge,
-                        color = if (state.isCompleted) {
-                            MaterialTheme.colorScheme.primary
-                        } else {
-                            MaterialTheme.colorScheme.onSurfaceVariant
-                        }
+                    StatusBadge(
+                        isCompleted = state.isCompleted,
+                        completedLabelRes = R.string.history_completed,
+                        incompleteLabelRes = R.string.history_not_completed
                     )
                 }
             }

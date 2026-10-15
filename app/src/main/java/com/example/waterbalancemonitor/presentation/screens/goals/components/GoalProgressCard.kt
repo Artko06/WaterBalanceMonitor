@@ -10,17 +10,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -32,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.waterbalancemonitor.R
+import com.example.waterbalancemonitor.presentation.components.StatusBadge
 import com.example.waterbalancemonitor.presentation.screens.goals.state.GoalsState
 
 @Composable
@@ -124,53 +119,16 @@ fun GoalProgressCard(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                StatusBadge(isCompleted = state.isCompleted)
+                StatusBadge(
+                    isCompleted = state.isCompleted,
+                    completedLabelRes = R.string.goals_completed,
+                    incompleteLabelRes = R.string.goals_in_progress
+                )
                 Spacer(modifier = Modifier.weight(1f))
                 TextButton(onClick = onEditBonus) {
                     Text(stringResource(R.string.goals_edit_bonus))
                 }
             }
-        }
-    }
-}
-
-@Composable
-private fun StatusBadge(isCompleted: Boolean) {
-    val containerColor = if (isCompleted) {
-        MaterialTheme.colorScheme.primaryContainer
-    } else {
-        MaterialTheme.colorScheme.secondaryContainer
-    }
-    val contentColor = if (isCompleted) {
-        MaterialTheme.colorScheme.onPrimaryContainer
-    } else {
-        MaterialTheme.colorScheme.onSecondaryContainer
-    }
-    Surface(
-        color = containerColor,
-        contentColor = contentColor,
-        shape = RoundedCornerShape(50)
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
-        ) {
-            Icon(
-                imageVector = if (isCompleted) Icons.Filled.Check else Icons.Filled.Info,
-                contentDescription = null,
-                modifier = Modifier.size(16.dp)
-            )
-            Text(
-                text = stringResource(
-                    if (isCompleted) {
-                        R.string.goals_completed
-                    } else {
-                        R.string.goals_in_progress
-                    }
-                ),
-                style = MaterialTheme.typography.labelLarge
-            )
         }
     }
 }
