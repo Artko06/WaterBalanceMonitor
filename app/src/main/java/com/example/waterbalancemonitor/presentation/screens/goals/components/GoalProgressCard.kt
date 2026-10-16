@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.waterbalancemonitor.R
 import com.example.waterbalancemonitor.presentation.components.StatusBadge
+import com.example.waterbalancemonitor.presentation.components.StatusBadgeType
 import com.example.waterbalancemonitor.presentation.screens.goals.state.GoalsState
 
 @Composable
@@ -120,9 +121,16 @@ fun GoalProgressCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 StatusBadge(
-                    isCompleted = state.isCompleted,
-                    completedLabelRes = R.string.goals_completed,
-                    incompleteLabelRes = R.string.goals_in_progress
+                    type = if (state.isCompleted) {
+                        StatusBadgeType.COMPLETED
+                    } else {
+                        StatusBadgeType.IN_PROGRESS
+                    },
+                    labelRes = if (state.isCompleted) {
+                        R.string.goals_completed
+                    } else {
+                        R.string.goals_in_progress
+                    }
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 TextButton(onClick = onEditBonus) {

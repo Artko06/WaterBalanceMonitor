@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -16,25 +17,36 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 
+enum class StatusBadgeType {
+    COMPLETED,
+    IN_PROGRESS,
+    LOCKED
+}
+
 @Composable
 fun StatusBadge(
-    isCompleted: Boolean,
-    @StringRes completedLabelRes: Int,
-    @StringRes incompleteLabelRes: Int,
+    type: StatusBadgeType,
+    @StringRes labelRes: Int,
     modifier: Modifier = Modifier
 ) {
-    val containerColor = if (isCompleted) {
-        MaterialTheme.colorScheme.primaryContainer
-    } else {
-        MaterialTheme.colorScheme.secondaryContainer
+    val containerColor = when (type) {
+        StatusBadgeType.COMPLETED -> MaterialTheme.colorScheme.primaryContainer
+        StatusBadgeType.IN_PROGRESS -> MaterialTheme.colorScheme.secondaryContainer
+        StatusBadgeType.LOCKED -> MaterialTheme.colorScheme.surfaceVariant
     }
-    val contentColor = if (isCompleted) {
-        MaterialTheme.colorScheme.onPrimaryContainer
-    } else {
-        MaterialTheme.colorScheme.onSecondaryContainer
+    val contentColor = when (type) {
+        StatusBadgeType.COMPLETED -> MaterialTheme.colorScheme.onPrimaryContainer
+        StatusBadgeType.IN_PROGRESS -> MaterialTheme.colorScheme.onSecondaryContainer
+        StatusBadgeType.LOCKED -> MaterialTheme.colorScheme.onSurfaceVariant
+    }
+    val icon: ImageVector = when (type) {
+        StatusBadgeType.COMPLETED -> Icons.Filled.Check
+        StatusBadgeType.IN_PROGRESS -> Icons.Filled.Info
+        StatusBadgeType.LOCKED -> Icons.Filled.Lock
     }
     Surface(
         color = containerColor,
@@ -48,14 +60,12 @@ fun StatusBadge(
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             Icon(
-                imageVector = if (isCompleted) Icons.Filled.Check else Icons.Filled.Info,
+                imageVector = icon,
                 contentDescription = null,
                 modifier = Modifier.size(16.dp)
             )
             Text(
-                text = stringResource(
-                    if (isCompleted) completedLabelRes else incompleteLabelRes
-                ),
+                text = stringResource(labelRes),
                 style = MaterialTheme.typography.labelLarge
             )
         }

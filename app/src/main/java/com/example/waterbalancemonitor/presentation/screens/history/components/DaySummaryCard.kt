@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.waterbalancemonitor.R
 import com.example.waterbalancemonitor.presentation.components.StatusBadge
+import com.example.waterbalancemonitor.presentation.components.StatusBadgeType
 import com.example.waterbalancemonitor.presentation.screens.history.state.HistoryState
 
 @Composable
@@ -91,9 +92,16 @@ fun DaySummaryCard(
                         color = MaterialTheme.colorScheme.primary
                     )
                     StatusBadge(
-                        isCompleted = state.isCompleted,
-                        completedLabelRes = R.string.history_completed,
-                        incompleteLabelRes = R.string.history_not_completed
+                        type = if (state.isCompleted) {
+                            StatusBadgeType.COMPLETED
+                        } else {
+                            StatusBadgeType.IN_PROGRESS
+                        },
+                        labelRes = if (state.isCompleted) {
+                            R.string.history_completed
+                        } else {
+                            R.string.history_not_completed
+                        }
                     )
                 }
             }
