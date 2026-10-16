@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.waterbalancemonitor.R
 import com.example.waterbalancemonitor.domain.model.Vessel
@@ -114,12 +115,23 @@ private fun VesselCell(
             )
         }
         Text(
-            text = vessel?.let {
-                "${it.name} · ${it.volumeMl} ${stringResource(R.string.unit_ml)}"
-            } ?: stringResource(R.string.picker_vessel_none),
+            text = vessel?.name ?: stringResource(R.string.picker_vessel_none),
             style = MaterialTheme.typography.labelMedium,
             color = contentColor,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+        Text(
+            text = vessel?.let {
+                "${it.volumeMl} ${stringResource(R.string.unit_ml)}"
+            } ?: VESSEL_VOLUME_PLACEHOLDER,
+            style = MaterialTheme.typography.labelSmall,
+            color = contentColor,
+            textAlign = TextAlign.Center,
+            maxLines = 1
         )
     }
 }
+
+private const val VESSEL_VOLUME_PLACEHOLDER = "\u2014"
