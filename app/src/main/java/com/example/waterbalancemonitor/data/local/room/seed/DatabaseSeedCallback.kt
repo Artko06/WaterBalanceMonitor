@@ -22,8 +22,9 @@ object DatabaseSeedCallback : RoomDatabase.Callback() {
         DefaultSeedData.achievements.forEach { achievement ->
             db.execSQL(
                 "INSERT OR IGNORE INTO achievement " +
-                    "(code, title, description, category, conditionType, conditionValue, icon) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    "(code, title, description, category, conditionType, conditionValue, " +
+                    "icon, prerequisiteCode) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                 arrayOf<Any?>(
                     achievement.code,
                     achievement.title,
@@ -31,7 +32,8 @@ object DatabaseSeedCallback : RoomDatabase.Callback() {
                     achievement.category,
                     achievement.conditionType,
                     achievement.conditionValue,
-                    achievement.icon
+                    achievement.icon,
+                    achievement.prerequisiteCode
                 )
             )
         }
