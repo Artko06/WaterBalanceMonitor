@@ -2,6 +2,7 @@ package com.example.waterbalancemonitor.presentation.mapper
 
 import androidx.annotation.StringRes
 import com.example.waterbalancemonitor.R
+import com.example.waterbalancemonitor.domain.model.AchievementCategory
 import com.example.waterbalancemonitor.domain.model.ActivityLevel
 import com.example.waterbalancemonitor.domain.model.Gender
 
@@ -27,4 +28,14 @@ fun ActivityLevel.descriptionRes(): Int = when (this) {
     ActivityLevel.MODERATE -> R.string.activity_moderate_desc
     ActivityLevel.ACTIVE -> R.string.activity_active_desc
     ActivityLevel.VERY_ACTIVE -> R.string.activity_very_active_desc
+}
+
+@StringRes
+fun AchievementCategory.labelRes(): Int = when (this) {
+    AchievementCategory.START -> R.string.achievements_category_start
+    AchievementCategory.DAILY -> R.string.achievements_category_daily
+    AchievementCategory.STREAK -> R.string.achievements_category_streak
+    AchievementCategory.TOTAL -> R.string.achievements_category_total
+    AchievementCategory.TIME -> R.string.achievements_category_time
+    AchievementCategory.OTHER -> R.string.achievements_category_other
 }

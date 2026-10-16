@@ -3,10 +3,15 @@ package com.example.waterbalancemonitor.presentation.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.waterbalancemonitor.R
+import com.example.waterbalancemonitor.domain.model.AchievementCategory
 import com.example.waterbalancemonitor.presentation.screens.PlaceholderScreen
+import com.example.waterbalancemonitor.presentation.screens.achievements.AchievementGroupScreen
+import com.example.waterbalancemonitor.presentation.screens.achievements.AchievementsScreen
 import com.example.waterbalancemonitor.presentation.screens.dashboard.DashboardScreen
 import com.example.waterbalancemonitor.presentation.screens.goals.GoalsScreen
 import com.example.waterbalancemonitor.presentation.screens.history.HistoryScreen
@@ -51,7 +56,24 @@ fun WaterBalanceNavHost(
         composable(Screen.Goals.route) {
             GoalsScreen()
         }
-        composable(Screen.Achievements.route) { PlaceholderScreen(R.string.nav_achievements) }
+        composable(Screen.Achievements.route) {
+            AchievementsScreen(
+                onNavigateToGroup = { category ->
+                    navController.navigate(Screen.AchievementGroup.path(category))
+                }
+            )
+        }
+        composable(
+            route = Screen.AchievementGroup.route,
+            arguments = listOf(
+                navArgument(Screen.ARG_CATEGORY) { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val raw = backStackEntry.arguments?.getString(Screen.ARG_CATEGORY)
+            val category = AchievementCategory.entries
+                .firstOrNull { it.name == raw } ?: AchievementCategory.OTHER
+            AchievementGroupScreen(category = category)
+        }
         composable(Screen.Reminders.route) { PlaceholderScreen(R.string.nav_reminders) }
         composable(Screen.Profile.route) {
             ProfileScreen(
