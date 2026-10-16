@@ -14,7 +14,8 @@ fun AchievementEntity.toDomain(): Achievement = Achievement(
     category = category.toEnumOrDefault(AchievementCategory.OTHER),
     conditionType = conditionType.toEnumOrDefault(AchievementConditionType.UNKNOWN),
     conditionValue = conditionValue,
-    icon = icon.toEnumOrDefault(AchievementIcon.DEFAULT)
+    icon = icon.toEnumOrDefault(AchievementIcon.DEFAULT),
+    prerequisiteCode = prerequisiteCode
 )
 
 fun Achievement.toData(): AchievementEntity = AchievementEntity(
@@ -25,5 +26,6 @@ fun Achievement.toData(): AchievementEntity = AchievementEntity(
     category = category.name,
     conditionType = conditionType.name,
     conditionValue = conditionValue,
-    icon = icon.name
+    icon = icon.name,
+    prerequisiteCode = prerequisiteCode
 )

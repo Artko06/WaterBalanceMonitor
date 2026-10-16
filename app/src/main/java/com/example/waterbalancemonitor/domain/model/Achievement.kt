@@ -8,5 +8,6 @@ data class Achievement(
     val category: AchievementCategory,
     val conditionType: AchievementConditionType,
     val conditionValue: Int,
-    val icon: AchievementIcon
+    val icon: AchievementIcon,
+    val prerequisiteCode: String? = null
 )

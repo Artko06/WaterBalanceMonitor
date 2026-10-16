@@ -6,6 +6,6 @@ data class UserAchievement(
     val id: Long,
     val achievementId: Long,
     val progress: Int,
-    val isUnlocked: Boolean,
-    val unlockedAt: LocalDateTime?
+    val isCompleted: Boolean,
+    val completedAt: LocalDateTime?
 )

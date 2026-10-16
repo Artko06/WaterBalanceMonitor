@@ -21,6 +21,6 @@ data class UserAchievementEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val achievementId: Long,
     val progress: Int,
-    val isUnlocked: Boolean,
-    val unlockedAt: Long?
+    val isCompleted: Boolean,
+    val completedAt: Long?
 )

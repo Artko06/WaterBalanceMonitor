@@ -1,5 +1,6 @@
 package com.example.waterbalancemonitor.domain.usecase.achievement
 
+import com.example.waterbalancemonitor.domain.model.Achievement
 import com.example.waterbalancemonitor.domain.model.AchievementConditionType
 import com.example.waterbalancemonitor.domain.model.IntakeEvent
 import com.example.waterbalancemonitor.domain.model.UserAchievement
@@ -31,6 +32,8 @@ class CheckAchievementsUseCase @Inject constructor(
         val achievements = achievementRepository.getAll()
         if (achievements.isEmpty()) return
 
+        val existing = userAchievementRepository.observeAll().first()
+            .associateBy { it.achievementId }
         val events = intakeEventRepository.observeAll().first()
         val summaries = dailySummaryRepository.observeBetween(EPOCH, today).first()
         val goals = dailyGoalRepository.observeBetween(EPOCH, today).first()
@@ -38,21 +41,68 @@ class CheckAchievementsUseCase @Inject constructor(
         val completedDates = goals.filter { it.isCompleted }.map { it.date }.toSet()
         val streak = currentStreak(completedDates, today)
 
-        achievements.forEach { achievement ->
-            val progress = progressFor(achievement.conditionType, achievement.conditionValue, events, completedDates.size, totalMl, streak)
-            val isUnlocked = achievement.conditionValue in 1..progress
-            val existing = userAchievementRepository.getByAchievementId(achievement.id)
-            val unlocked = isUnlocked || existing?.isUnlocked == true
+        val completedCodes = achievements
+            .filter { existing[it.id]?.isCompleted == true }
+            .map { it.code }
+            .toMutableSet()
+
+        orderedByDepth(achievements).forEach { achievement ->
+            val previous = existing[achievement.id]
+            val available = achievement.prerequisiteCode == null ||
+                achievement.prerequisiteCode in completedCodes
+
+            if (!available && previous?.isCompleted != true) {
+                userAchievementRepository.save(
+                    UserAchievement(
+                        id = previous?.id ?: 0,
+                        achievementId = achievement.id,
+                        progress = 0,
+                        isCompleted = false,
+                        completedAt = previous?.completedAt
+                    )
+                )
+                return@forEach
+            }
+
+            val progress = progressFor(
+                conditionType = achievement.conditionType,
+                conditionValue = achievement.conditionValue,
+                events = events,
+                completedDays = completedDates.size,
+                totalMl = totalMl,
+                streak = streak
+            )
+            val reached = achievement.conditionValue in 1..progress
+            val isCompleted = reached || previous?.isCompleted == true
+            val completedAt = previous?.completedAt ?: if (isCompleted) now() else null
+
             userAchievementRepository.save(
                 UserAchievement(
-                    id = existing?.id ?: 0,
+                    id = previous?.id ?: 0,
                     achievementId = achievement.id,
                     progress = progress,
-                    isUnlocked = unlocked,
-                    unlockedAt = existing?.unlockedAt ?: if (isUnlocked) now() else null
+                    isCompleted = isCompleted,
+                    completedAt = completedAt
                 )
             )
+            if (isCompleted) completedCodes.add(achievement.code)
         }
+    }
+
+    private fun orderedByDepth(achievements: List<Achievement>): List<Achievement> {
+        val byCode = achievements.associateBy { it.code }
+        return achievements.sortedBy { depth(it, byCode) }
+    }
+
+    private fun depth(achievement: Achievement, byCode: Map<String, Achievement>): Int {
+        var depth = 0
+        var code = achievement.prerequisiteCode
+        val visited = mutableSetOf<String>()
+        while (code != null && visited.add(code)) {
+            depth++
+            code = byCode[code]?.prerequisiteCode
+        }
+        return depth
     }
 
     private fun progressFor(

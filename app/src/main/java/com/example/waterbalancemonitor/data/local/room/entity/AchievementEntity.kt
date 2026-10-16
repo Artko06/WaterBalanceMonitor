@@ -16,5 +16,6 @@ data class AchievementEntity(
     val category: String,
     val conditionType: String,
     val conditionValue: Int,
-    val icon: String
+    val icon: String,
+    val prerequisiteCode: String? = null
 )

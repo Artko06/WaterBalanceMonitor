@@ -1,13 +1,17 @@
 package com.example.waterbalancemonitor.fake
 
+import com.example.waterbalancemonitor.domain.model.Achievement
 import com.example.waterbalancemonitor.domain.model.DailyGoal
 import com.example.waterbalancemonitor.domain.model.DailySummary
 import com.example.waterbalancemonitor.domain.model.IntakeEvent
 import com.example.waterbalancemonitor.domain.model.Profile
+import com.example.waterbalancemonitor.domain.model.UserAchievement
+import com.example.waterbalancemonitor.domain.repository.AchievementRepository
 import com.example.waterbalancemonitor.domain.repository.DailyGoalRepository
 import com.example.waterbalancemonitor.domain.repository.DailySummaryRepository
 import com.example.waterbalancemonitor.domain.repository.IntakeEventRepository
 import com.example.waterbalancemonitor.domain.repository.ProfileRepository
+import com.example.waterbalancemonitor.domain.repository.UserAchievementRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.datetime.LocalDate
@@ -86,19 +90,25 @@ class FakeProfileRepository : ProfileRepository {
 
 class FakeIntakeEventRepository : IntakeEventRepository {
 
+    private val events = mutableListOf<IntakeEvent>()
+
     var lastFrom: LocalDateTime? = null
     var lastTo: LocalDateTime? = null
 
-    override fun observeAll(): Flow<List<IntakeEvent>> = flowOf(emptyList())
+    fun add(event: IntakeEvent) {
+        events.add(event)
+    }
+
+    override fun observeAll(): Flow<List<IntakeEvent>> = flowOf(events.toList())
 
     override fun observeBetween(from: LocalDateTime, to: LocalDateTime): Flow<List<IntakeEvent>> {
         lastFrom = from
         lastTo = to
-        return flowOf(emptyList())
+        return flowOf(events.filter { it.consumedAt in from..to })
     }
 
     override suspend fun getBetween(from: LocalDateTime, to: LocalDateTime): List<IntakeEvent> =
-        emptyList()
+        events.filter { it.consumedAt in from..to }
 
     override suspend fun getById(id: Long): IntakeEvent? = null
 
@@ -111,4 +121,54 @@ class FakeIntakeEventRepository : IntakeEventRepository {
     override suspend fun sumVolumeBetween(from: LocalDateTime, to: LocalDateTime): Int = 0
 
     override suspend fun countBetween(from: LocalDateTime, to: LocalDateTime): Int = 0
+}
+
+class FakeAchievementRepository : AchievementRepository {
+
+    private val achievements = mutableListOf<Achievement>()
+
+    fun add(achievement: Achievement) {
+        achievements.add(achievement)
+    }
+
+    override fun observeAll(): Flow<List<Achievement>> = flowOf(achievements.toList())
+
+    override suspend fun getAll(): List<Achievement> = achievements.toList()
+
+    override suspend fun getByCode(code: String): Achievement? =
+        achievements.firstOrNull { it.code == code }
+
+    override suspend fun save(achievement: Achievement) {
+        achievements.add(achievement)
+    }
+
+    override suspend fun saveAll(achievements: List<Achievement>) {
+        this.achievements.addAll(achievements)
+    }
+}
+
+class FakeUserAchievementRepository : UserAchievementRepository {
+
+    private val byAchievementId = mutableMapOf<Long, UserAchievement>()
+
+    override fun observeAll(): Flow<List<UserAchievement>> =
+        flowOf(byAchievementId.values.toList())
+
+    override fun observeByAchievementId(achievementId: Long): Flow<UserAchievement?> =
+        flowOf(byAchievementId[achievementId])
+
+    override suspend fun getByAchievementId(achievementId: Long): UserAchievement? =
+        byAchievementId[achievementId]
+
+    override suspend fun save(userAchievement: UserAchievement) {
+        byAchievementId[userAchievement.achievementId] = userAchievement
+    }
+
+    override suspend fun saveAll(userAchievements: List<UserAchievement>) {
+        userAchievements.forEach { byAchievementId[it.achievementId] = it }
+    }
+
+    override suspend fun deleteByAchievementId(achievementId: Long) {
+        byAchievementId.remove(achievementId)
+    }
 }

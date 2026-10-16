@@ -7,14 +7,14 @@ fun UserAchievementEntity.toDomain(): UserAchievement = UserAchievement(
     id = id,
     achievementId = achievementId,
     progress = progress,
-    isUnlocked = isUnlocked,
-    unlockedAt = unlockedAt.toLocalDateTimeOrNull()
+    isCompleted = isCompleted,
+    completedAt = completedAt.toLocalDateTimeOrNull()
 )
 
 fun UserAchievement.toData(): UserAchievementEntity = UserAchievementEntity(
     id = id,
     achievementId = achievementId,
     progress = progress,
-    isUnlocked = isUnlocked,
-    unlockedAt = unlockedAt.toEpochMillisecondsOrNull()
+    isCompleted = isCompleted,
+    completedAt = completedAt.toEpochMillisecondsOrNull()
 )
