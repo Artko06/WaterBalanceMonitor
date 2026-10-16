@@ -38,7 +38,8 @@ fun WaterBalanceNavHost(
         }
         composable(Screen.Dashboard.route) {
             DashboardScreen(
-                onNavigateToGoal = { navController.navigate(Screen.Goals.route) }
+                onNavigateToGoal = { navController.navigate(Screen.Goals.route) },
+                onNavigateToHistory = { navController.navigate(Screen.History.route) }
             )
         }
         composable(Screen.History.route) {

@@ -134,6 +134,9 @@ class DashboardViewModel @Inject constructor(
 
             DashboardAction.ChangeGoalClicked ->
                 _effect.tryEmit(DashboardEffect.NavigateToGoalEditing)
+
+            DashboardAction.OpenHistory ->
+                _effect.tryEmit(DashboardEffect.NavigateToHistory)
         }
     }
 

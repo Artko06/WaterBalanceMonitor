@@ -25,4 +25,6 @@ sealed interface DashboardAction {
     data class DeleteIntake(val event: IntakeEvent) : DashboardAction
 
     data object ChangeGoalClicked : DashboardAction
+
+    data object OpenHistory : DashboardAction
 }

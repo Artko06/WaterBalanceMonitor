@@ -3,6 +3,7 @@ package com.example.waterbalancemonitor.presentation.screens.dashboard
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,6 +46,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun DashboardScreen(
     onNavigateToGoal: () -> Unit,
+    onNavigateToHistory: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DashboardViewModel = hiltViewModel()
 ) {
@@ -56,6 +58,7 @@ fun DashboardScreen(
         viewModel.effect.collect { effect ->
             when (effect) {
                 DashboardEffect.NavigateToGoalEditing -> onNavigateToGoal()
+                DashboardEffect.NavigateToHistory -> onNavigateToHistory()
                 DashboardEffect.ScrollToTop -> scope.launch { listState.animateScrollToItem(0) }
             }
         }
@@ -130,11 +133,21 @@ private fun DashboardContent(
         }
         item { AddWaterSection(state = state, onAction = onAction) }
         item {
-            Text(
-                text = stringResource(R.string.dashboard_today),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(top = 4.dp)
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.dashboard_today),
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(top = 4.dp)
+                )
+                TextButton(onClick = { onAction(DashboardAction.OpenHistory) }) {
+                    Text(stringResource(R.string.dashboard_history))
+                }
+            }
         }
         if (state.todayIntakes.isEmpty()) {
             item {

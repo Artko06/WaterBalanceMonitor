@@ -15,7 +15,7 @@ enum class BottomDestination(
     val icon: ImageVector
 ) {
     DASHBOARD(Screen.Dashboard, R.string.nav_dashboard, Icons.Filled.Home),
-    HISTORY(Screen.History, R.string.nav_history, Icons.Filled.DateRange),
-    STATISTICS(Screen.Statistics, R.string.nav_statistics, Icons.Filled.Star),
+    ACHIEVEMENTS(Screen.Achievements, R.string.nav_achievements, Icons.Filled.Star),
+    STATISTICS(Screen.Statistics, R.string.nav_statistics, Icons.Filled.DateRange),
     PROFILE(Screen.Profile, R.string.nav_profile, Icons.Filled.AccountCircle)
 }
