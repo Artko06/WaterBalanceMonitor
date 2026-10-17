@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.example.waterbalancemonitor.R
 import com.example.waterbalancemonitor.domain.model.Vessel
 import com.example.waterbalancemonitor.presentation.mapper.toDrawableRes
+import com.example.waterbalancemonitor.presentation.mapper.vesselName
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -115,7 +116,7 @@ private fun VesselCell(
             )
         }
         Text(
-            text = vessel?.name ?: stringResource(R.string.picker_vessel_none),
+            text = vessel?.let { vesselName(it) } ?: stringResource(R.string.picker_vessel_none),
             style = MaterialTheme.typography.labelMedium,
             color = contentColor,
             textAlign = TextAlign.Center,

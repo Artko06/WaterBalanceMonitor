@@ -33,6 +33,8 @@ import com.example.waterbalancemonitor.R
 import com.example.waterbalancemonitor.domain.model.AchievementStatus
 import com.example.waterbalancemonitor.presentation.components.StatusBadge
 import com.example.waterbalancemonitor.presentation.components.StatusBadgeType
+import com.example.waterbalancemonitor.presentation.mapper.achievementDescription
+import com.example.waterbalancemonitor.presentation.mapper.achievementTitle
 import com.example.waterbalancemonitor.presentation.mapper.toDrawableRes
 import com.example.waterbalancemonitor.presentation.screens.achievements.state.AchievementItem
 
@@ -87,14 +89,14 @@ fun AchievementCard(
                 )
             }
             Text(
-                text = item.title,
+                text = achievementTitle(item.code, item.title),
                 style = MaterialTheme.typography.titleSmall,
                 textAlign = TextAlign.Center,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = item.description,
+                text = achievementDescription(item.code, item.description),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,

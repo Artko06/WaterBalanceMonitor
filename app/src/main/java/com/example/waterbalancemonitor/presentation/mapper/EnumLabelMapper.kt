@@ -4,7 +4,9 @@ import androidx.annotation.StringRes
 import com.example.waterbalancemonitor.R
 import com.example.waterbalancemonitor.domain.model.AchievementCategory
 import com.example.waterbalancemonitor.domain.model.ActivityLevel
+import com.example.waterbalancemonitor.domain.model.AppLanguage
 import com.example.waterbalancemonitor.domain.model.Gender
+import com.example.waterbalancemonitor.domain.model.ThemeMode
 
 @StringRes
 fun Gender.labelRes(): Int = when (this) {
@@ -38,4 +40,19 @@ fun AchievementCategory.labelRes(): Int = when (this) {
     AchievementCategory.TOTAL -> R.string.achievements_category_total
     AchievementCategory.TIME -> R.string.achievements_category_time
     AchievementCategory.OTHER -> R.string.achievements_category_other
+}
+
+@StringRes
+fun ThemeMode.labelRes(): Int = when (this) {
+    ThemeMode.LIGHT -> R.string.theme_light
+    ThemeMode.DARK -> R.string.theme_dark
+    ThemeMode.SYSTEM -> R.string.theme_system
+}
+
+@StringRes
+fun AppLanguage.labelRes(): Int = when (this) {
+    AppLanguage.SYSTEM -> R.string.language_system
+    AppLanguage.ENGLISH -> R.string.language_english
+    AppLanguage.RUSSIAN -> R.string.language_russian
+    AppLanguage.BELARUSIAN -> R.string.language_belarusian
 }

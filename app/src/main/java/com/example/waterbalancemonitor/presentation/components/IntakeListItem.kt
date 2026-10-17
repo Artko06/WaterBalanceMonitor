@@ -37,7 +37,9 @@ import com.example.waterbalancemonitor.domain.model.DrinkType
 import com.example.waterbalancemonitor.domain.model.IntakeEvent
 import com.example.waterbalancemonitor.domain.model.Vessel
 import com.example.waterbalancemonitor.domain.usecase.intake.effectiveVolumeMl
+import com.example.waterbalancemonitor.presentation.mapper.drinkName
 import com.example.waterbalancemonitor.presentation.mapper.toDrawableRes
+import com.example.waterbalancemonitor.presentation.mapper.vesselName
 import kotlinx.coroutines.launch
 
 @Composable
@@ -136,12 +138,12 @@ fun IntakeListItem(
                     .padding(start = 12.dp)
             ) {
                 Text(
-                    text = drinkType?.name.orEmpty(),
+                    text = drinkType?.let { drinkName(it) }.orEmpty(),
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Text(
                     text = listOfNotNull(
-                        vessel?.name,
+                        vessel?.let { vesselName(it) },
                         "%02d:%02d".format(event.consumedAt.hour, event.consumedAt.minute)
                     ).joinToString(" · "),
                     style = MaterialTheme.typography.bodySmall,

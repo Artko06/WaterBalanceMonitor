@@ -26,7 +26,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.waterbalancemonitor.R
 import com.example.waterbalancemonitor.presentation.components.NumberEditor
+import com.example.waterbalancemonitor.presentation.mapper.drinkName
 import com.example.waterbalancemonitor.presentation.mapper.toDrawableRes
+import com.example.waterbalancemonitor.presentation.mapper.vesselName
 import com.example.waterbalancemonitor.presentation.screens.dashboard.action.DashboardAction
 import com.example.waterbalancemonitor.presentation.screens.dashboard.state.DashboardState
 import kotlin.math.roundToInt
@@ -85,7 +87,7 @@ fun AddWaterSection(
                                 modifier = Modifier.size(28.dp)
                             )
                             Text(
-                                text = drinkType.name,
+                                text = drinkName(drinkType),
                                 style = MaterialTheme.typography.bodyLarge,
                                 modifier = Modifier
                                     .weight(1f)
@@ -125,7 +127,7 @@ fun AddWaterSection(
                         }
                         Text(
                             text = selectedVessel?.let {
-                                "${it.name} · ${it.volumeMl} ${stringResource(R.string.unit_ml)}"
+                                "${vesselName(it)} · ${it.volumeMl} ${stringResource(R.string.unit_ml)}"
                             } ?: stringResource(R.string.dashboard_vessel_none),
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier

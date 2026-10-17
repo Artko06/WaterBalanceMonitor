@@ -7,6 +7,7 @@ import kotlin.math.roundToInt
 
 data class AchievementItem(
     val id: Long,
+    val code: String,
     val title: String,
     val description: String,
     val icon: AchievementIcon,

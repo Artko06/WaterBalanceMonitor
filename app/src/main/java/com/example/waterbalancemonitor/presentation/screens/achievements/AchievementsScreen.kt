@@ -98,6 +98,7 @@ private fun AchievementsContentPreview() {
                         items = listOf(
                             AchievementItem(
                                 id = 1,
+                                code = "FIRST_GLASS",
                                 title = "First glass",
                                 description = "Log your first intake",
                                 icon = AchievementIcon.FIRST,
@@ -113,6 +114,7 @@ private fun AchievementsContentPreview() {
                         items = listOf(
                             AchievementItem(
                                 id = 2,
+                                code = "STREAK_3",
                                 title = "3-day streak",
                                 description = "Reach the norm 3 days in a row",
                                 icon = AchievementIcon.STREAK,
@@ -123,6 +125,7 @@ private fun AchievementsContentPreview() {
                             ),
                             AchievementItem(
                                 id = 3,
+                                code = "STREAK_7",
                                 title = "Week streak",
                                 description = "Reach the norm 7 days in a row",
                                 icon = AchievementIcon.STREAK,

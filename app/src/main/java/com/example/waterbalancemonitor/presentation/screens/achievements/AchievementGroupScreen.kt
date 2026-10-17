@@ -87,6 +87,7 @@ private fun AchievementGroupContentPreview() {
                 items = listOf(
                     AchievementItem(
                         id = 1,
+                        code = "STREAK_3",
                         title = "3-day streak",
                         description = "Reach the norm 3 days in a row",
                         icon = AchievementIcon.STREAK,
@@ -97,6 +98,7 @@ private fun AchievementGroupContentPreview() {
                     ),
                     AchievementItem(
                         id = 2,
+                        code = "STREAK_7",
                         title = "Week streak",
                         description = "Reach the norm 7 days in a row",
                         icon = AchievementIcon.STREAK,
@@ -107,6 +109,7 @@ private fun AchievementGroupContentPreview() {
                     ),
                     AchievementItem(
                         id = 3,
+                        code = "STREAK_14",
                         title = "Two-week streak",
                         description = "Reach the norm 14 days in a row",
                         icon = AchievementIcon.STREAK,

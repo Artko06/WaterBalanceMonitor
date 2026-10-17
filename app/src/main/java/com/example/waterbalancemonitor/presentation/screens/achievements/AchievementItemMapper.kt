@@ -27,6 +27,7 @@ fun buildAchievementItems(
         }
         AchievementItem(
             id = achievement.id,
+            code = achievement.code,
             title = achievement.title,
             description = achievement.description,
             icon = achievement.icon,

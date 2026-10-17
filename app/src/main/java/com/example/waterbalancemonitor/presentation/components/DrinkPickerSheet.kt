@@ -26,6 +26,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.waterbalancemonitor.R
 import com.example.waterbalancemonitor.domain.model.DrinkType
+import com.example.waterbalancemonitor.domain.model.DrinkTypeIcon
+import com.example.waterbalancemonitor.presentation.mapper.drinkName
 import com.example.waterbalancemonitor.presentation.mapper.toDrawableRes
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -70,15 +72,19 @@ fun DrinkPickerSheet(
     }
 }
 
-private val PREFERRED_DRINK_ORDER = listOf("Water", "Tea", "Coffee")
+private val PREFERRED_DRINK_ORDER = listOf(
+    DrinkTypeIcon.WATER,
+    DrinkTypeIcon.TEA,
+    DrinkTypeIcon.COFFEE
+)
 
 private fun List<DrinkType>.orderedForPicker(): List<DrinkType> = sortedWith(
     compareBy(
         { drinkType ->
-            val index = PREFERRED_DRINK_ORDER.indexOf(drinkType.name)
+            val index = PREFERRED_DRINK_ORDER.indexOf(drinkType.icon)
             if (index == -1) PREFERRED_DRINK_ORDER.size else index
         },
-        { it.name }
+        { it.id }
     )
 )
 
@@ -115,7 +121,7 @@ private fun DrinkCell(
             modifier = Modifier.size(32.dp)
         )
         Text(
-            text = drinkType.name,
+            text = drinkName(drinkType),
             style = MaterialTheme.typography.labelMedium,
             color = contentColor,
             textAlign = TextAlign.Center,

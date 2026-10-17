@@ -28,7 +28,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.waterbalancemonitor.R
 import com.example.waterbalancemonitor.presentation.components.NumberEditor
+import com.example.waterbalancemonitor.presentation.mapper.drinkName
 import com.example.waterbalancemonitor.presentation.mapper.toDrawableRes
+import com.example.waterbalancemonitor.presentation.mapper.vesselName
 import com.example.waterbalancemonitor.presentation.screens.history.action.HistoryAction
 import com.example.waterbalancemonitor.presentation.screens.history.state.HistoryState
 import kotlin.math.roundToInt
@@ -55,14 +57,14 @@ fun EditIntakeSheet(
             )
             PickerRow(
                 label = stringResource(R.string.picker_drink_type),
-                value = state.editDrinkType?.name.orEmpty(),
+                value = state.editDrinkType?.let { drinkName(it) }.orEmpty(),
                 drawableRes = state.editDrinkType?.icon?.toDrawableRes(),
                 onEdit = { onAction(HistoryAction.OpenDrinkPicker) }
             )
             PickerRow(
                 label = stringResource(R.string.picker_vessel),
                 value = state.editVessel?.let {
-                    "${it.name} · ${it.volumeMl} ${stringResource(R.string.unit_ml)}"
+                    "${vesselName(it)} · ${it.volumeMl} ${stringResource(R.string.unit_ml)}"
                 } ?: stringResource(R.string.picker_vessel_none),
                 drawableRes = state.editVessel?.icon?.toDrawableRes(),
                 onEdit = { onAction(HistoryAction.OpenVesselPicker) }
