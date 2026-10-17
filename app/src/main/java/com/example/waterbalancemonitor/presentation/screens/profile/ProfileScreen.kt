@@ -29,12 +29,14 @@ import com.example.waterbalancemonitor.presentation.screens.profile.action.Profi
 import com.example.waterbalancemonitor.presentation.screens.profile.components.EditProfileSheet
 import com.example.waterbalancemonitor.presentation.screens.profile.components.ProfileHeader
 import com.example.waterbalancemonitor.presentation.screens.profile.components.SettingRow
+import com.example.waterbalancemonitor.presentation.screens.profile.components.SettingsPickerSheet
 import com.example.waterbalancemonitor.presentation.screens.profile.components.SettingsSection
 import com.example.waterbalancemonitor.presentation.screens.profile.components.SwitchRow
 import com.example.waterbalancemonitor.presentation.mapper.labelRes
 import com.example.waterbalancemonitor.presentation.screens.profile.effect.ProfileEffect
 import com.example.waterbalancemonitor.presentation.screens.profile.state.ProfileField
 import com.example.waterbalancemonitor.presentation.screens.profile.state.ProfileState
+import com.example.waterbalancemonitor.presentation.screens.profile.state.SettingsField
 import com.example.waterbalancemonitor.presentation.screens.profile.viewmodel.ProfileViewModel
 import com.example.waterbalancemonitor.presentation.theme.WaterBalanceMonitorTheme
 
@@ -68,6 +70,18 @@ fun ProfileScreen(
             EditProfileSheet(state = state, onAction = viewModel::onAction)
         }
     }
+
+    val settingsField = state.editingSettingsField
+    if (settingsField != null) {
+        SettingsPickerSheet(
+            field = settingsField,
+            themeMode = state.themeMode,
+            language = state.language,
+            onThemeSelected = { viewModel.onAction(ProfileAction.ThemeSelected(it)) },
+            onLanguageSelected = { viewModel.onAction(ProfileAction.LanguageSelected(it)) },
+            onDismiss = { viewModel.onAction(ProfileAction.DismissSettingsSheet) }
+        )
+    }
 }
 
 @Composable
@@ -96,6 +110,11 @@ private fun ProfileContent(
             modifier = Modifier.padding(horizontal = 16.dp)
         )
         GoalSection(
+            state = state,
+            onAction = onAction,
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
+        SettingsAppSection(
             state = state,
             onAction = onAction,
             modifier = Modifier.padding(horizontal = 16.dp)
@@ -177,6 +196,34 @@ private fun GoalSection(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun SettingsAppSection(
+    state: ProfileState,
+    onAction: (ProfileAction) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    SettingsSection(
+        title = stringResource(R.string.profile_section_settings),
+        modifier = modifier
+    ) {
+        SettingRow(
+            label = stringResource(R.string.settings_theme),
+            value = stringResource(state.themeMode.labelRes()),
+            onClick = {
+                onAction(ProfileAction.SettingsFieldClicked(SettingsField.THEME))
+            }
+        )
+        HorizontalDivider()
+        SettingRow(
+            label = stringResource(R.string.settings_language),
+            value = stringResource(state.language.labelRes()),
+            onClick = {
+                onAction(ProfileAction.SettingsFieldClicked(SettingsField.LANGUAGE))
+            }
+        )
     }
 }
 

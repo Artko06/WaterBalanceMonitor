@@ -1,8 +1,11 @@
 package com.example.waterbalancemonitor.presentation.screens.profile.action
 
 import com.example.waterbalancemonitor.domain.model.ActivityLevel
+import com.example.waterbalancemonitor.domain.model.AppLanguage
 import com.example.waterbalancemonitor.domain.model.Gender
+import com.example.waterbalancemonitor.domain.model.ThemeMode
 import com.example.waterbalancemonitor.presentation.screens.profile.state.ProfileField
+import com.example.waterbalancemonitor.presentation.screens.profile.state.SettingsField
 
 sealed interface ProfileAction {
 
@@ -23,4 +26,12 @@ sealed interface ProfileAction {
     data object ApplyClicked : ProfileAction
 
     data object NormInfoClicked : ProfileAction
+
+    data class SettingsFieldClicked(val field: SettingsField) : ProfileAction
+
+    data object DismissSettingsSheet : ProfileAction
+
+    data class ThemeSelected(val themeMode: ThemeMode) : ProfileAction
+
+    data class LanguageSelected(val language: AppLanguage) : ProfileAction
 }

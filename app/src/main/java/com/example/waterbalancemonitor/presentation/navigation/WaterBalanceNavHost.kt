@@ -80,7 +80,6 @@ fun WaterBalanceNavHost(
                 onNavigateToNormInfo = { navController.navigate(Screen.NormInfo.route) }
             )
         }
-        composable(Screen.Settings.route) { PlaceholderScreen(R.string.nav_settings) }
         composable(Screen.NormInfo.route) {
             NormInfoScreen()
         }

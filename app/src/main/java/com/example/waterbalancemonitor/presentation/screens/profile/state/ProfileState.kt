@@ -1,7 +1,9 @@
 package com.example.waterbalancemonitor.presentation.screens.profile.state
 
 import com.example.waterbalancemonitor.domain.model.ActivityLevel
+import com.example.waterbalancemonitor.domain.model.AppLanguage
 import com.example.waterbalancemonitor.domain.model.Gender
+import com.example.waterbalancemonitor.domain.model.ThemeMode
 
 data class ProfileState(
     val name: String = "",
@@ -14,6 +16,9 @@ data class ProfileState(
     val isGoalManual: Boolean = false,
     val goalOverrideMl: Int? = null,
     val editingField: ProfileField? = null,
+    val editingSettingsField: SettingsField? = null,
+    val themeMode: ThemeMode = ThemeMode.SYSTEM,
+    val language: AppLanguage = AppLanguage.SYSTEM,
     val draftText: String = "",
     val draftNumber: Float? = null,
     val isLoaded: Boolean = false,

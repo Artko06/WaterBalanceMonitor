@@ -6,6 +6,10 @@ import com.example.waterbalancemonitor.domain.model.Profile
 import com.example.waterbalancemonitor.domain.usecase.profile.CalculateDailyNormUseCase
 import com.example.waterbalancemonitor.domain.usecase.profile.ObserveProfileUseCase
 import com.example.waterbalancemonitor.domain.usecase.profile.SaveProfileUseCase
+import com.example.waterbalancemonitor.domain.usecase.settings.ObserveLanguageUseCase
+import com.example.waterbalancemonitor.domain.usecase.settings.ObserveThemeModeUseCase
+import com.example.waterbalancemonitor.domain.usecase.settings.SetLanguageUseCase
+import com.example.waterbalancemonitor.domain.usecase.settings.SetThemeModeUseCase
 import com.example.waterbalancemonitor.presentation.screens.profile.action.ProfileAction
 import com.example.waterbalancemonitor.presentation.screens.profile.effect.ProfileEffect
 import com.example.waterbalancemonitor.presentation.screens.profile.state.ProfileField
@@ -31,7 +35,11 @@ import kotlin.time.Clock
 class ProfileViewModel @Inject constructor(
     private val observeProfile: ObserveProfileUseCase,
     private val saveProfile: SaveProfileUseCase,
-    private val calculateDailyNorm: CalculateDailyNormUseCase
+    private val calculateDailyNorm: CalculateDailyNormUseCase,
+    private val observeThemeMode: ObserveThemeModeUseCase,
+    private val setThemeMode: SetThemeModeUseCase,
+    private val observeLanguage: ObserveLanguageUseCase,
+    private val setLanguage: SetLanguageUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ProfileState())
@@ -72,6 +80,16 @@ class ProfileViewModel @Inject constructor(
                 }
             } else {
                 _state.update { it.copy(isLoaded = true) }
+            }
+        }
+        viewModelScope.launch {
+            observeThemeMode().collect { mode ->
+                _state.update { it.copy(themeMode = mode) }
+            }
+        }
+        viewModelScope.launch {
+            observeLanguage().collect { language ->
+                _state.update { it.copy(language = language) }
             }
         }
     }
@@ -117,6 +135,26 @@ class ProfileViewModel @Inject constructor(
 
             ProfileAction.NormInfoClicked ->
                 _effect.tryEmit(ProfileEffect.NavigateToNormInfo)
+
+            is ProfileAction.SettingsFieldClicked ->
+                _state.update { it.copy(editingSettingsField = action.field) }
+
+            ProfileAction.DismissSettingsSheet ->
+                _state.update { it.copy(editingSettingsField = null) }
+
+            is ProfileAction.ThemeSelected -> {
+                _state.update {
+                    it.copy(themeMode = action.themeMode, editingSettingsField = null)
+                }
+                viewModelScope.launch { setThemeMode(action.themeMode) }
+            }
+
+            is ProfileAction.LanguageSelected -> {
+                _state.update {
+                    it.copy(language = action.language, editingSettingsField = null)
+                }
+                viewModelScope.launch { setLanguage(action.language) }
+            }
         }
     }
 
